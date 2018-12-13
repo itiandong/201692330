@@ -14,3 +14,4 @@ struct olsr_common {
   uint8_t hops; // 跳数
   uint16_t seqno; //消息的序列号，这是唯一不变的以确保消息不回被重发
 };
+TEST
