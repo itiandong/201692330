@@ -1,0 +1,17 @@
+张振宇的目录，记录一些个人工作 。
+12.13
+Makefile.linux:
+SRCS += 	$(wildcard src/linux/*.c src/unix/*.c)
+HDRS +=		$(wildcard src/linux/*.h src/unix/*.h)
+记录linux下需要的文件
+lq_packet.h 55
+struct olsr_common {
+  uint8_t type; //消息类型
+  olsr_reltime vtime; //表示接收后很长时间节点如何确保数据包中的消息有效
+  uint16_t size;  //消息大小
+  union olsr_ip_addr orig; //发端地址
+  uint8_t ttl;  // 最大跳数
+  uint8_t hops; // 跳数
+  uint16_t seqno; //消息的序列号，这是唯一不变的以确保消息不回被重发
+};
+TEST
