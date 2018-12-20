@@ -49,15 +49,19 @@ struct lq_hello_message {
   struct lq_hello_neighbor *neigh; //邻居节点
 };
 
-
+//与结构体lq hello header共同组成了HELLO消息数据包的头
 struct lq_hello_info_header {
   uint8_t link_code;
-  uint8_t reserved;
+  uint8_t reserved;               //保留字段，设为“000000000000
   uint16_t size;
 };
-
 struct lq_hello_header {
   uint16_t reserved;
-  uint8_t htime;
+  uint8_t htime;                  //描述此接口的HELLO消息发送时间间隔
   uint8_t will;
 };
+
+
+
+
+
