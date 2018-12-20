@@ -4,6 +4,8 @@ Makefile.linux:
 SRCS += 	$(wildcard src/linux/*.c src/unix/*.c)
 HDRS +=		$(wildcard src/linux/*.h src/unix/*.h)
 记录linux下需要的文件
+
+
 lq_packet.h 55
 struct olsr_common {
   uint8_t type; //消息类型
@@ -14,5 +16,48 @@ struct olsr_common {
   uint8_t hops; // 跳数
   uint16_t seqno; //消息的序列号，这是唯一不变的以确保消息不回被重发
 };
-TEST
-aaaaaa
+
+存储节点信息结构体：
+link_set.h  line 58
+
+OLSR对协议所使用的相关数据包使用了统一的格式。这样做的目的是促进
+协议的扩展性且不损害其反向兼容性。同时也提供了一种把背负不同种类
+信息的传输归到单一的传输的简便方式。每个分组封装了一个或多个消息，
+这些消息共用同一个头格式。
+
+HELLO
+HELLO消息用于建立一个节点的邻居表，其中包括邻居节点的地址以及本
+节点到邻居节点的延时和开销，OLSR采用周期性的广播HELLO分组来侦听
+邻居节点的状态和无线链路的对称性。节点之间无线链路的状态包括：非
+对称链路，对称链路，连接MPR的链路。但OLSR协议只关心对称链路，同
+时HELLO分组只在一跳的范围内广播，不能被转发
+
+//邻居节点集HELLO消息的头部
+struct lq_hello_neighbor {
+  uint8_t link_type;
+  uint8_t neigh_type;               //邻居类型
+  union olsr_ip_addr addr;
+  struct lq_hello_neighbor *next;  //HELLO消息传递给的下一个邻居 结点
+  uint32_t linkquality[0];         //链路质量
+};
+
+//消息数据包的头部
+struct lq_hello_message {
+  struct olsr_common comm;
+  olsr_reltime htime;              //HELLO 消息发射间隔
+  uint8_t will;                    //指定节点的意愿进行，有意愿的 _WILL NEVER的节点被 选为MPR的任意节点
+  struct lq_hello_neighbor *neigh; //邻居节点
+};
+
+
+struct lq_hello_info_header {
+  uint8_t link_code;
+  uint8_t reserved;
+  uint16_t size;
+};
+
+struct lq_hello_header {
+  uint16_t reserved;
+  uint8_t htime;
+  uint8_t will;
+};
