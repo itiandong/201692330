@@ -1,0 +1,41 @@
+个人文件夹
+link_set.h   节点信息存储
+
+struct link_entry {
+  union olsr_ip_addr local_iface_addr;  // 存储该节点ip地址，
+  union olsr_ip_addr neighbor_iface_addr; //纯粹相邻节点的ip地址
+  const struct interface *inter;
+  char *if_name;
+  struct timer_entry *link_timer;
+  struct timer_entry *link_sym_timer;
+  uint32_t ASYM_time;
+  olsr_reltime vtime;
+  struct neighbor_entry *neighbor; //以链表形式存储邻居节点信息
+  uint8_t prev_status;
+
+  /*
+   * Hysteresis
+   */
+  float L_link_quality;
+  int L_link_pending;
+  uint32_t L_LOST_LINK_time;
+  struct timer_entry *link_hello_timer; /* When we should receive a new HELLO */
+  olsr_reltime last_htime;
+  bool olsr_seqno_valid;
+  uint16_t olsr_seqno;
+
+  /*
+   * packet loss
+   */
+  olsr_reltime loss_helloint;
+  struct timer_entry *link_loss_timer;
+
+  /* user defined multiplies for link quality, multiplied with 65536 */
+  uint32_t loss_link_multiplier;
+
+  /* cost of this link */
+  olsr_linkcost linkcost;
+
+  struct list_node link_list;          /* double linked list of all link entries */
+  uint32_t linkquality[0];
+};
