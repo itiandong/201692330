@@ -10,7 +10,7 @@
 - 张振宇：[点我](https://github.com/itiandong/201692330/tree/master/%E5%BC%A0%E6%8C%AF%E5%AE%87)
 - 刘雨晴：[点我](https://github.com/itiandong/201692330/tree/master/%E5%88%98%E9%9B%A8%E6%99%B4)
 
-## 3. 我们的文档
+## 3. 我们的文档（12/30 停止更新，改为本地文档，防止重复工作）
 
 - [大作业协同版](https://docs.qq.com/doc/DWlZNWnR5ZE9xcU5h)
 
